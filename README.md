@@ -1,8 +1,36 @@
 # ruby-getting-started
 
-A barebones Rails app, which can easily be deployed to Heroku.
+A barebones Rails app, which can easily be deployed to Heroku and run within Vagrant.
 
-This application support the [Getting Started with Ruby on Heroku](https://devcenter.heroku.com/articles/getting-started-with-ruby) article - check it out.
+This application supports the [Getting Started with Ruby on Heroku](https://devcenter.heroku.com/articles/getting-started-with-ruby) article - check it out.
+
+This application has been forked from [Heroku's original](https://github.com/heroku/ruby-getting-started) example app in order to work out of the box with [Vagrant's Heroku Box](https://atlas.hashicorp.com/lazygray/boxes/heroku-cedar-14).
+
+## Setup
+1. install Vagrant if not already done
+2. download and initialize the vagrant box: `vagrant init lazygray/heroku-cedar-14`
+3. configure network (eg: create private network or forward ports). examples below.
+	a. for private network: edit `Vagrantfile`, add `config.vm.network "private_network", ip: "10.0.0.0"`
+	b. forward one port: edit `Vagrantfile`, add `config.vm.network "forwarded_port", guest: 3000, host: 5000, auto_correct: true`
+4. start box: `vagrant up`
+5. connect to it: `vagrant ssh`
+6. add some missing OS packages:
+	a. Ruby 2.2.0: 
+		i. `rbenv install 2.2.0`
+		ii. `echo '2.2.0' > /home/vagrant/.rbenv/version`
+		iii. `gem install bundler`
+7. configure access to Postgresql
+	a. convenient but unsafe method: 
+		i. `sudo vi /etc/postgresql/9.4/main/pg_hba.conf`
+		ii. change the line `local all postgres peer` to `local all all trust`
+		iii. `sudo service postgresql restart`
+8. clone this repo: `git clone https://github.com/xstherrera1987/ruby-getting-started.git`
+9. nav to the project directory `cd ruby-getting-started`
+10. setup app (same as below): `bundle install && bundle exec rake db:create db:migrate` 
+11. start server: `rails server`
+12. (optional) view from host OS: open browser to `http://localhost:5000`
+13. download heroku-toolbelt
+14. deploy to heroku (same as original app) 
 
 ## Running Locally
 
