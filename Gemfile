@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.2.3'
+# the Vagrant VM has 2.2.0 installed
+# ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
